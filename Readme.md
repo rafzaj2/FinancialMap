@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/rafzaj2/FinancialMap.svg?branch=master)](https://travis-ci.org/rafzaj2/FinancialMap)
+
 # Financial Map
 
 The application is dedicated to manage financial assets.
