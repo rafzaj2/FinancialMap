@@ -1,0 +1,9 @@
+[submodule "backend/external/pistache"]
+	path = backend/external/pistache
+	url = https://github.com/oktal/pistache
+[submodule "backend/external/catch"]
+	path = backend/external/catch
+	url = https://github.com/catchorg/Catch2
+[submodule "backend/external/json"]
+	path = backend/external/json
+	url = https://github.com/nlohmann/json

@@ -1,0 +1,14 @@
+dist: trusty
+sudo: required
+
+language: cpp
+
+services:
+  - docker
+
+before_install:
+  - sudo apt-get update
+  - docker build backend -t backend
+
+script:
+  - docker run -v "$PWD/backend:/app:rw" backend /bin/bash -c "ls -al"
