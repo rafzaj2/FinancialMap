@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM financialmaporg/backend:latest
 
 RUN apt-get update \
   && apt-get install -y \
@@ -9,6 +9,7 @@ RUN apt-get update \
 RUN apt-get install -y \
      git \
      curl \
+     vim \
      make \
      gcc-7 \
      g++-7 \
@@ -30,5 +31,8 @@ ENV CC=/usr/bin/gcc-7
 ENV CXX=/usr/bin/g++-7
 
 WORKDIR /app
+
+# Make port 80 available to the world outside this container
+EXPOSE 80
 
 CMD ["/bin/bash"]
