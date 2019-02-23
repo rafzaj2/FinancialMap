@@ -1,7 +1,7 @@
 version: "3"
 services:
   web:
-    image: financialmaporg/backend:latest
+    image: financialmaporg/backend
     deploy:
       replicas: 1
       resources:
