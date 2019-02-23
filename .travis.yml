@@ -7,7 +7,7 @@ services:
   - docker
 
 before_install:
-  - docker pull financialmaporg/backend:latest
+  - docker pull financialmaporg/backend
 
 script:
-  - docker run -v "$PWD/backend:/app:rw" financial/backend:0.1 /bin/bash -c "ls -al"
+  - docker run -v "$PWD/backend:/app:rw" financial/backend /bin/bash -c "ls -al"
