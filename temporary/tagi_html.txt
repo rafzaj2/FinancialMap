@@ -1,0 +1,110 @@
+Remember:
+1) At W3Schools we always use lowercase attribute names.
+2) W3C recommends quotes in HTML, and demands quotes for stricter document types like XHTML.
+3) Using quotes are the most common. Omitting quotes can produce errors. 
+4) Double quotes around attribute values are the most common in HTML, but single quotes can also be used.
+5) Metadata typically define the document title, character set, styles, links, scripts, and other meta information.
+6) Ctrl + u (for checking the source of the site)
+7) CSS stands for Cascading Style Sheets.
+8) CSS can be added to HTML elements in 3 ways:
+	a) Inline - by using the style attribute in HTML elements
+	b) Internal - by using a <style> element in the <head> section
+	c) External - by using an external CSS file
+9) An external style sheet can be written in any text editor. The file must not contain any HTML code, and must be saved with a .css extension.
+  Example:
+  body {
+    background-color: powderblue;
+  }
+  h1 {
+    color: blue;
+  }
+  p {
+    color: red;
+  }
+
+10) To use an external style sheet, add a link to it in the <head> section of the HTML page
+  Example:
+  <head>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+
+11) Always specify the width and height of an image. If width and height are not specified, the page might flicker while the image loads.
+12) border:0; is added to prevent IE9 (and earlier) from displaying a border around the image (when the image is a link).
+13) Always specify an <img> element as the last child element of the <picture> element. The <img> element is used by browsers that
+ do not support the <picture> element, or if none of the <source> tags matched.
+  Example:
+  Show one picture if the browser window (viewport) is a minimum of 650 pixels, and another image if not, but larger than 465 pixels.
+<picture>
+  <source media="(min-width: 650px)" srcset="img_pink_flowers.jpg">
+  <source media="(min-width: 465px)" srcset="img_white_flower.jpg">
+  <img src="img_orange_flowers.jpg" alt="Flowers" style="width:auto;">
+</picture> 
+
+14) 
+
+
+<br>	break the line
+<a> </a> 
+<img src="img_girl.jpg" width="500" height="600"> </img>		HTML image tag with attributes "src", "width" and "height"
+<img src="img_girl.jpg" alt="Girl with a jacket"> </img>		The alt attribute specifies an alternative text to be used, when an image cannot be displayed.
+<p style="color:red">I am a paragraph</p>						The style attribute is used to specify the styling of an element, like color, font, size etc.
+<html lang="en-US">												The language is declared with the lang attribute.
+<p title="I'm a tooltip"> Testing ...</p>						Title attribute is added to the <p> element. The value of the title attribute will be displayed
+																as a tooltip when you mouse over the paragraph
+<p title="John 'ShotGun' Nelson">				In some situations, when the attribute value itself contains double quotes, it is necessary to use single quotes
+<h1 style="font-size:60px;">Heading 1</h1>		specify the size for any heading with the style attribute, using the CSS font-size property
+<hr>											horizontal rule - element is used to separate content (or define a change) in an HTML page
+<head> 											element is a container for metadata. HTML metadata is data about the HTML document
+<pre> </pre>					The text inside a <pre> element is displayed in a fixed-width font (usually Courier), and it preserves both spaces and line breaks
+<tagname style="property:value;">				The property is a CSS property. The value is a CSS value
+<body style="background-color:powderblue;">		This example sets the background color for a page to powderblue
+<h1 style="font-family:verdana;">This is a heading</h1>	set font of heading to verdana
+<h1 style="font-size:300%;">This is a heading</h1>				x3 size of text
+style="text-align:center;"									 	center position of text
+<q> </q>														element defines a short quotation.
+
+
+<b> - Bold text
+<strong> - Important text
+<i> - Italic text
+<em> - Emphasized text
+<mark> - Marked text
+<small> - Small text
+<del> - Deleted text
+<ins> - Inserted text
+<sub> - Subscript text
+<sup> - Superscript text
+
+
+Use the HTML style attribute for inline styling
+Use the HTML <style> element to define internal CSS
+Use the HTML <link> element to refer to an external CSS file
+Use the HTML <head> element to store <style> and <link> elements
+Use the CSS color property for text colors
+Use the CSS font-family property for text fonts
+Use the CSS font-size property for text sizes
+Use the CSS border property for borders
+Use the CSS padding property for space inside the border
+Use the CSS margin property for space outside the border
+
+Use the <a> element to define a hyperlink
+Use the href attribute to define the link address
+Use the target attribute to define where to open the linked document
+Use the <img> element (inside <a>) to use an image as a link
+Use the id attribute (id="value") to define bookmarks in a page
+Use the href attribute (href="#value") to link to the bookmark
+
+<img src="img_girl.jpg" alt="Girl" style="width:500px;height:600px;">  ==  <img src="img_girl.jpg" alt="Girl" width="500" height="600"> 
+
+
+
+Use the HTML <img> element to define an image
+Use the HTML src attribute to define the URL of the image
+Use the HTML alt attribute to define an alternate text for an image, if it cannot be displayed
+Use the HTML width and height attributes to define the size of the image
+Use the CSS width and height properties to define the size of the image (alternatively)
+Use the CSS float property to let the image float
+Use the HTML <map> element to define an image-map
+Use the HTML <area> element to define the clickable areas in the image-map
+Use the HTML <img>'s element usemap attribute to point to an image-map
+Use the HTML <picture> element to show different images for different devices

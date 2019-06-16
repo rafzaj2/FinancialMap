@@ -1,0 +1,42 @@
+body {
+    background-color: lightblue;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+    color: black; border: 1px solid black;
+}
+
+h2 {
+    color: red; border: 1px solid black;
+}
+
+title {
+    color: red; border: 1px solid black;
+}
+
+address {
+    color: black;
+}
+
+#mainheading {
+    color: brown;
+}
+
+a:link, a:visited {
+    background-color: #f44336;
+    color: white;
+    padding: 5px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+  }
+  
+  a:hover, a:active {
+    background-color: red;
+  }
+
+img {
+    width: 800px;
+    height: 400px;
+}

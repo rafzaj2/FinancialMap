@@ -1,0 +1,19 @@
+g++ -std=c++11 main.cpp -o main -lpistache -lpthread  (to build hello world pistache server )
+/opt/google/chrome/chrome --disable-web-security --user-data-dir="~/Programming/Chrome" &
+
+sudo ldconfig (załaduje biblioteki po zainstalowaniu np. pistache)
+
+
+
+The ldconfig Linux command creates the necessary links and cache (for use by the run-time linker, ld.so) to the most recent shared libraries found in the directories specified on the command line, in the file /etc/ld.so.conf, and in the trusted directories (/usr/lib and /lib). 
+
+ldconfig checks the header and file names of the libraries it encounters when determining which versions should have their links updated. ldconfig ignores symbolic links when scanning for libraries.
+
+ldconfig will attempt to deduce the type of ELF libs (ie. libc 5.x or libc 6.x (glibc)) based on what C libraries if any the library was linked against, therefore when making dynamic libraries, it is wise to explicitly link against libc (use -lc). ldconfig is capable of storing multiple ABI types of libraries into a single cache on architectures which allow native running of multiple ABIs, like ia32/ia64/x86_64 or sparc32/sparc64.
+
+Some existing libs do not contain enough information to allow the deduction of their type, therefore the /etc/ld.so.conf file format allows the specification of an expected type. This is only used for those ELF libs which we can not work out. The format is like this "dirname=TYPE", where type can be libc4, libc5 or libc6. (This syntax also works on the command line). Spaces are not allowed. Also see the -p option.
+
+Directory names containing an = are no longer legal unless they also have an expected type specifier.
+
+ldconfig should normally be run by the super-user as it may require write permission on some root owned directories and files. If you use -r option to change the root directory, you don't have to be super-user though as long as you have sufficient right to that directory tree.
+

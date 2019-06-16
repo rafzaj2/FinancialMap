@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form id="LoginForm" onsubmit="return false">
+    <h1>Login Form</h1>
+    <div class="FormRow">
+        <label for="Username">Username:</label>
+        <input type="text" size="15" id="Username" name="Username">
+    </div>
+    <div class="FormRow">
+        <label for="Password">Password:</label>
+        <input type="text" size="15" id="Password" name="Password">
+    </div>
+    <div class="FormRow" id="LoginButtonDiv">
+        <input type="submit" value="Login">
+    </div>
+    <div id="BadLogin">
+        <p>The login information you entered does not match
+        an account in our records. Please try again.</p>
+    </div>
+
+</form>
+
+<script>
+window.addEventListener(window,"load", function() {
+    var loginForm = document.getElementById("LoginForm");
+    window.addEventListener(loginForm, "submit", function() {
+         login(loginForm);
+     });
+ });
+
+function login(form) {
+    var un = form.Username.value;
+    var pw = form.Password.value;
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("post", "Login", true);
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            loginResults();
+        }
+    }
+}
+
+function loginResults() {
+    var loggedIn = document.getElementById("LoggedIn");
+    var badLogin = document.getElementById("BadLogin");
+    if (xmlhttp.responseText.indexOf("failed") == -1) {
+        loggedIn.innerHTML = "Logged in as " + xmlhttp.responseText;
+        loggedIn.style.display = "block";
+        form.style.display = "none";
+    } else {
+        badLogin.style.display = "block";
+        form.Username.select();
+        form.Username.className = "Highlighted";
+        setTimeout(function() {
+            badLogin.style.display = 'none';
+        }, 3000);
+    }
+}
+</script>
+
+</body>
+</html>
