@@ -1,0 +1,47 @@
+ <!DOCTYPE html>
+<html>
+<head>
+<title>FinancialMap</title>
+</head>
+<body>
+
+<h1>FinancialMap</h1>
+<p>Version 1.2</p>
+
+
+  
+  <button id="reveal" onclick="sendReq()">Send request to backend  </button>
+    <script>
+    function sendReq()
+    {
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', "http://127.0.0.1:9080/", true);
+      xhr.send();
+  
+      xhr.addEventListener("readystatechange", processRequest, false);
+
+      xhr.addEventListener("error", processError, false);
+  
+      function processRequest(e)
+      {
+        alert("Process request.");
+        alert(xhr.readyState);
+       // alert(xhr.responseURL);
+        alert(xhr.status);
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          //var response = JSON.parse(xhr.responseText);
+          //alert(response.ip);
+          alert(xhr.responseText);
+	  //alert("Hello! I am an alert box.");
+        }
+      }
+
+      function processError(e)
+      {
+       alert("Process error.");
+      }
+    }
+    </script>
+
+</body>
+</html>
