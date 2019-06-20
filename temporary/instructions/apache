@@ -1,0 +1,8 @@
+1. Installation:
+	sudo apt-get install apache2
+2. Configuration of web server:
+	The configuration system is fully documented in /usr/share/doc/apache2/README.Debian.gz
+	a2dissite yourdomain.conf
+	sudo a2ensite yourdomain.conf
+	service apache2 restart
+	sudo systemctl restart apache2
