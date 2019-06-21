@@ -28,19 +28,23 @@
 </form>
 
 <script>
-document.getElementById("LoginForm").addEventListener("submit", function() {
-    var loginForm = document.getElementById("LoginForm");
-    login(loginForm);
-});
+    document.getElementById("LoginForm").addEventListener("submit", function() {
+        alert("First!");
+        var loginForm = document.getElementById("LoginForm");
+        login(loginForm);
+    });
 
 function login(form) {
+    alert("Second!");
     var un = form.Username.value;
     var pw = form.Password.value;
+    var userData = {"Username": un, "Password": pw};
+    var userDataJson = JSON.stringify(userData);
+    alert(userDataJson); 
     var xmlhttp = new XMLHttpRequest();
-    var info = {"username": un ,"password": pw};
-    xmlhttp.open('POST', "http://127.0.0.1:9080/", true);
-
-    xmlhttp.send(info);
+    xmlhttp.open("POST", "http://127.0.0.1:9080/", true);
+    xmlhttp.setRequestHeader('Content-type', 'application/json');
+    xmlhttp.send(userDataJson);
     xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             loginResults();
@@ -49,6 +53,7 @@ function login(form) {
 }
 
 function loginResults() {
+    alert("Third!");   
     var loggedIn = document.getElementById("LoggedIn");
     var badLogin = document.getElementById("BadLogin");
     if (xmlhttp.responseText.indexOf("failed") == -1) {

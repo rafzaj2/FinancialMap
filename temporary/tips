@@ -1,3 +1,31 @@
+How to build pistache:
+
+1:
+cd pistache
+mkdir build
+cd build
+cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release ..
+make
+sudo make install
+
+2A:
+
+sudo ldconfig (załaduje biblioteki po zainstalowaniu np. pistache)
+
+2B:
+vim ~/.bashrc
+export LD_LIBRARY_PATH=/usr/local/lib
+
+3:
+source ~/.bashrc
+
+4:
+g++ -std=c++11 main.cpp -o main -lpistache -lpthread  (to build hello world pistache server )
+
+5:
+/opt/google/chrome/chrome --disable-web-security --user-data-dir="~/Programming/Chrome" &
+
+
 g++ -std=c++11 main.cpp -o main -lpistache -lpthread  (to build hello world pistache server )
 /opt/google/chrome/chrome --disable-web-security --user-data-dir="~/Programming/Chrome" &
 
