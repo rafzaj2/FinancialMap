@@ -1,6 +1,6 @@
-IDIR = ./include
-CXX = g++ -std=c++11
-CFLAGS=-I ~/Programing/FinancialMap/backend
+IDIR=./include
+CXX=g++ -std=c++11
+CFLAGS=-I~/Programing/FinancialMap/backend
 SRCDIR=./src
 
 ODIR=./obj
@@ -13,15 +13,22 @@ DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 _OBJ = main.o authentication.o 
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
+_SRCS = main.cpp authentication.cpp
+SRCS = $(patsubst %,$(SRCDIR)/%,$(_SRCS))
 
-$(ODIR)/%.o: $(SRCDIR)/%.c $(DEPS)
+# $(info $(SRCS))
+# $(info $(SRCDIR)/%.cpp $(DEPS))
+# $(info $(OBJ))
+
+$(ODIR)/%.o: $(SRCS) $(DEPS)
 	$(CXX) -c -o $@ $< $(CFLAGS)
 
-# obj/main.o: src/main.cpp include/authentication.h
-# 	g++ -std=c++11 -c src/main.cpp $(CFLAGS)
+# $(ODIR)/%.o: $(SRCDIR)/%.cpp $(DEPS)
+# 	$(CXX) -c -o $@ $< $(CFLAGS)
+
 
 make: $(OBJ)
-	$(CXX) -o $@ $^ $(CFLAGS) $(LIBS)
+	$(CXX) -o $^ $(LIBS)
 
 .PHONY: clean
 
