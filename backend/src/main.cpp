@@ -2,7 +2,7 @@
 #include <pistache/http.h>
 #include <pistache/router.h>
 #include <pistache/endpoint.h>
-#include "authentication.h"
+#include "include/authentication.h"
 
 
 class StatsEndpoint {
@@ -10,10 +10,7 @@ class StatsEndpoint {
     StatsEndpoint(Address addr)
       : httpEndpoint(std::make_shared<Http::Endpoint>(addr)),
         router(std::make_shared<Rest::Router>())
-    {
-        
-
-    }
+    {}
 
   void init(size_t thr = 2)
   {
@@ -64,7 +61,7 @@ int main(int argc, char *argv[]) {
   stats.init(thr);
 
   auth.setupRoutes();
-  
+
   stats.start();
 }
 
