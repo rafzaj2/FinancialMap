@@ -16,9 +16,8 @@ OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 _SRCS = main.cpp authentication.cpp
 SRCS = $(patsubst %,$(SRCDIR)/%,$(_SRCS))
 
-$(info $(SRCS))
-$(info $(SRCDIR)/%.cpp $(DEPS))
-$(info $(OBJ))
+$(ODIR):
+	mkdir -p $(ODIR)
 
 $(ODIR)/%.o: $(SRCDIR)/%.cpp $(DEPS)
 	$(CXX) -c -o $@ $< $(CFLAGS)
@@ -32,4 +31,4 @@ start: build
 .PHONY: clean
 
 clean:
-	rm -f $(ODIR)/*.o build
+	rm -f $(ODIR) build
