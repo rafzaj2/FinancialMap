@@ -29,6 +29,7 @@ enum Stock
 
 enum class InvestmentRetrunPeriod
 {
+    TOTAL = 0,
     D1 = 1,
     D3 = 3,
     D5 = 5,
@@ -36,6 +37,7 @@ enum class InvestmentRetrunPeriod
     M1 = 30,
     M3 = 90,
     M6 = 180,
+    YTD = 200,
     Y1 = 365,
     Y3 = 1095,
     Y5 = 1825,
@@ -60,6 +62,7 @@ public:
     virtual ~Investment();
     double getInitialValue();
     double getCurrentValue();
+    double calculateInvestmentReturn();
     double calculateInvestmentReturn(const InvestmentRetrunPeriod period);
     double getHistoricalAssetValue(std::time_t periodTime);
     virtual void identify() const;

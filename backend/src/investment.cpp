@@ -44,20 +44,26 @@ double Investment::getCurrentValue()
 
 double Investment::calculateInvestmentReturn(const InvestmentRetrunPeriod period)
 {
-    int periodInday = static_cast<int>(period);
-    int periodInSeconds = periodInday * 24 * 60 * 60;
     std::chrono::time_point<std::chrono::system_clock> currentTime;
-    currentTime = std::chrono::system_clock::now();
+    currentTime = std::chrono::system_clock::now(); 
     std::time_t currentDate = std::chrono::system_clock::to_time_t(currentTime);
-    std::time_t periodDate(static_cast<int>(currentDate) - periodInSeconds);
-    
-
-    cout << "Period date is equal to " << std::ctime(&periodDate) << endl;
     cout << "Start date is equal to " << std::ctime(&currentDate) << endl;
-    
+    double currentValue = getHistoricalAssetValue(currentDate);
 
-    double comparedValue = getHistoricalAssetValue(periodDate);
-    return m_currentValue / comparedValue;
+    if(InvestmentRetrunPeriod::TOTAL == period)
+    {
+        return currentValue/m_intialValue;
+    }
+    else
+    {
+        int periodInday = static_cast<int>(period);
+        int periodInSeconds = periodInday * 24 * 60 * 60;
+        std::time_t periodDate(static_cast<int>(currentDate) - periodInSeconds);
+        double comparedValue = getHistoricalAssetValue(periodDate);
+        cout << "Period date is equal to " << std::ctime(&periodDate) << endl;
+        return currentValue / comparedValue;
+    }
+
 }
 
 double Investment::getHistoricalAssetValue(std::time_t periodTime)
@@ -78,19 +84,19 @@ Share::Share(double initialValue, double currentValue, Country country, Stock st
     : Investment(initialValue, currentValue),
          m_country(country), m_stock(stock)
 {
-    cout << "\nShare class constructor";  
+
 }
 
 Share::Share(Country country, Stock stock)
     : Investment(),
         m_country(country), m_stock(stock)
 {
-    cout << "\nShare class constructor";  
+
 }
 
 Share::~Share()
 {
-    cout << "\nShare class destructor";  
+
 }
 
 void Share::identify() const
