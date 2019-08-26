@@ -68,18 +68,4 @@ public:
     virtual void identify() const;
 };
 
-class Share : public Investment
-{
-private:
-    Country m_country;
-    Stock m_stock;
-
-public:
-    Share() = delete;
-    Share(Country country, Stock stock);
-    Share(double initialValue, double currentValue, Country country, Stock stock);
-    virtual ~Share();
-    void identify() const;
-};
-
 

@@ -1,4 +1,5 @@
 #include "investment.h"
+#include "share.h"
 #include <iostream>
 #include <chrono>
 #include <ctime> 
@@ -47,12 +48,12 @@ double Investment::calculateInvestmentReturn(const InvestmentRetrunPeriod period
     std::chrono::time_point<std::chrono::system_clock> currentTime;
     currentTime = std::chrono::system_clock::now(); 
     std::time_t currentDate = std::chrono::system_clock::to_time_t(currentTime);
-    cout << "Start date is equal to " << std::ctime(&currentDate) << endl;
+    cout << "Current date is equal to " << std::ctime(&currentDate) << endl;
     double currentValue = getHistoricalAssetValue(currentDate);
 
     if(InvestmentRetrunPeriod::TOTAL == period)
     {
-        return currentValue/m_intialValue;
+        return currentValue / m_intialValue;
     }
     else
     {
@@ -63,7 +64,6 @@ double Investment::calculateInvestmentReturn(const InvestmentRetrunPeriod period
         cout << "Period date is equal to " << std::ctime(&periodDate) << endl;
         return currentValue / comparedValue;
     }
-
 }
 
 double Investment::getHistoricalAssetValue(std::time_t periodTime)
@@ -78,31 +78,6 @@ void Investment::identify() const
     cout << "\nObject identyfication...\nObejct is an Investment class type";
 }
 
-/****************Share Class********************************************/
-
-Share::Share(double initialValue, double currentValue, Country country, Stock stock)
-    : Investment(initialValue, currentValue),
-         m_country(country), m_stock(stock)
-{
-
-}
-
-Share::Share(Country country, Stock stock)
-    : Investment(),
-        m_country(country), m_stock(stock)
-{
-
-}
-
-Share::~Share()
-{
-
-}
-
-void Share::identify() const
-{
-    cout << "\nObject identyfication...\nObejct is an Share class type";
-}
 
 /***** Main function written in testing purposes ************/
 
@@ -115,5 +90,3 @@ int main(int argc, char const *argv[])
 
     return 0;
 }
-
-
