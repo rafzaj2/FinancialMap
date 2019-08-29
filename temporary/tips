@@ -49,3 +49,7 @@ Directory names containing an = are no longer legal unless they also have an exp
 
 ldconfig should normally be run by the super-user as it may require write permission on some root owned directories and files. If you use -r option to change the root directory, you don't have to be super-user though as long as you have sufficient right to that directory tree.
 
+
+
+How to clone sigle submodule:
+    git submodule update -- ./external/pistache

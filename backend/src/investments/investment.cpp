@@ -1,12 +1,8 @@
 #include "investment.h"
 #include "share.h"
 #include <iostream>
-#include <chrono>
-#include <ctime> 
-
 
 using namespace std;
-using namespace std::chrono;
 
 /* Investment class function definitions */
 
@@ -76,17 +72,4 @@ double Investment::getHistoricalAssetValue(std::time_t periodTime)
 void Investment::identify() const
 {
     cout << "\nObject identyfication...\nObejct is an Investment class type";
-}
-
-
-/***** Main function written in testing purposes ************/
-
-int main(int argc, char const *argv[])
-{
-    InvestmentRetrunPeriod oneDay = InvestmentRetrunPeriod::D1;
-    Investment invest(100.00);
-    double returnRate = invest.calculateInvestmentReturn(oneDay);
-    cout << "Retrun rate from investition is " << returnRate << endl;
-
-    return 0;
 }

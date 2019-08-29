@@ -2,8 +2,14 @@
 #include <pistache/http.h>
 #include <pistache/router.h>
 #include <pistache/endpoint.h>
-//#include "authentication.h"
-#include "../include/authentication.h"
+#include "authentication.h"
+#include "investment.h"
+#include <chrono>
+#include <ctime> 
+
+
+using namespace std;
+using namespace std::chrono;
 
 
 class StatsEndpoint {
@@ -38,31 +44,36 @@ class StatsEndpoint {
 
 
 int main(int argc, char *argv[]) {
-  Port port(9080);
+  // Port port(9080);
 
-  int thr = 2;
+  // int thr = 2;
 
-  if (argc >=2)
-  {
-    port = std::stol(argv[1]);
+  // if (argc >=2)
+  // {
+  //   port = std::stol(argv[1]);
 
-    if (argc == 3)
-      thr = std::stol(argv[2]);
-  }
+  //   if (argc == 3)
+  //     thr = std::stol(argv[2]);
+  // }
 
-  Address addr(Ipv4::any(), port);
+  // Address addr(Ipv4::any(), port);
 
-  std::cout << "Cores = " << hardware_concurrency() << std::endl;
-  std::cout << "Using " << thr << " threads" << std::endl;
+  // std::cout << "Cores = " << hardware_concurrency() << std::endl;
+  // std::cout << "Using " << thr << " threads" << std::endl;
 
-  StatsEndpoint stats(addr);
+  // StatsEndpoint stats(addr);
 
-  Auth auth(stats.getRouter());
+  // Auth auth(stats.getRouter());
 
-  stats.init(thr);
+  // stats.init(thr);
 
-  auth.setupRoutes();
+  // auth.setupRoutes();
 
-  stats.start();
+  // stats.start();
+
+  InvestmentRetrunPeriod oneDay = InvestmentRetrunPeriod::D1;
+  Investment invest(100.00);
+  double returnRate = invest.calculateInvestmentReturn(oneDay);
+  cout << "Retrun rate from investition is " << returnRate << endl;
 }
 
