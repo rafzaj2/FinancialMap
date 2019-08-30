@@ -1,5 +1,4 @@
-//#include "authentication.h"
-#include "../include/authentication.h"
+#include "authentication.h"
 
 void Auth::setupRoutes()
 {

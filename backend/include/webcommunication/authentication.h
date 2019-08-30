@@ -8,8 +8,6 @@ using namespace Pistache;
 using json = nlohmann::json;
 
 
-using namespace Pistache;
-
 class Auth
 {
     public:

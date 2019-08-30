@@ -36,7 +36,7 @@
 
 IDIR=./include
 CXX=g++ -std=c++11
-CFLAGS=-Iinclude/investments -Iinclude/dbcommunication -Iinclude/webcommunication
+CPPFLAGS=-Iinclude/investments -Iinclude/dbcommunication -Iinclude/webcommunication -Iexternal/json/include
 SRCDIR=./src
 
 ODIR=./obj
@@ -62,8 +62,9 @@ DEPS = $(patsubst %,$(IDIR)/$(INVESTMENTSDIR)/%,$(INVESTMENTSHEADERS)) \
 	   $(patsubst %,$(IDIR)/$(WEBCOMMUNICATIONDIR)/%,$(WEBCOMMUNICATIONHEADERS))
 
 
-_OBJ = $(INVESTMENTSCPP) $(WEBCOMMUNICATION) $(DBCOMMUNICATION)
-OBJ = $(patsubst %,$(ODIR)/%,$(patsubst %.cpp,%.o,$(_OBJ)))
+_OBJ = $(INVESTMENTSCPP) $(DBCOMMUNICATIONCPP) $(WEBCOMMUNICATIONCPP)
+OBJ = $(ODIR)/main.o \
+	  $(patsubst %,$(ODIR)/%,$(patsubst %.cpp,%.o,$(_OBJ)))
 
 
 SRCS = $(SRCDIR)/main.cpp \
@@ -79,8 +80,11 @@ $(ODIR):
 
 # Rule for building all obejct files needed to create executable file
 
-$(ODIR)/%.o: $(SRCDIR)/$(INVESTMENTSDIR)/%.cpp $(DEPS)
-	$(CXX) -c -o $@ $^ $(CFLAGS)
+# $(ODIR)/%.o: $(SRCDIR)/$(INVESTMENTSDIR)/%.cpp $(DEPS)
+# 	$(CXX) -c -o $@ $^ $(CPPFLAGS)
+
+$(ODIR)/%.o: $(SRCS) $(DEPS)
+	echo $(CXX) -c -o $@ $^ $(CPPFLAGS)
 
 
 build: $(OBJ)
@@ -93,3 +97,6 @@ start: build
 
 clean:
 	rm -rf $(ODIR) ./build
+
+show:
+	echo $(OBJ)
