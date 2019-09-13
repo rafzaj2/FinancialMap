@@ -73,3 +73,4 @@ void Investment::identify() const
 {
     cout << "\nObject identyfication...\nObejct is an Investment class type";
 }
+
