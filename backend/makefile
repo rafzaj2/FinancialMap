@@ -16,9 +16,9 @@ INVESTMENTSCPP=$(wildcard $(SRCDIR)/$(INVESTMENTSDIR)/*.cpp)
 DBCOMMUNICATIONCPP=$(wildcard $(SRCDIR)/$(DBCOMMUNICATIONDIR)/*.cpp)
 WEBCOMMUNICATIONCPP=$(wildcard $(SRCDIR)/$(WEBCOMMUNICATIONDIR)/*.cpp)
 
-INVESTMENTSHEADERS=$(wildcard $(IDIR)/$(INVESTMENTSDIR)*.h)
-DBCOMMUNICATIONHEADERS=$(wildcard $(IDIR)/$(DBCOMMUNICATIONDIR)*.h)
-WEBCOMMUNICATIONHEADERS=$(wildcard $(IDIR)/$(WEBCOMMUNICATIONDIR)*.h)
+INVESTMENTSHEADERS=$(wildcard $(IDIR)/$(INVESTMENTSDIR)/*.h)
+DBCOMMUNICATIONHEADERS=$(wildcard $(IDIR)/$(DBCOMMUNICATIONDIR)/*.h)
+WEBCOMMUNICATIONHEADERS=$(wildcard $(IDIR)/$(WEBCOMMUNICATIONDIR)/*.h)
 
 LIBS=-lpistache -lpthread
 
@@ -39,17 +39,19 @@ $(ODIR):
 
 # Rule for building all obejct files needed to create executable file
 
-$(ODIR)/%.o: */*/%.cpp
+$(ODIR)/%.o: */*/%.cpp $(DEPS)
+	@echo Compiling $<...
 	@mkdir -p $(dir $@)
-	$(CXX) -c $< -o $@ $(CPPFLAGS)
+	$(CXX) -c -o $@ $< $(CPPFLAGS)
 
-$(ODIR)/main.o: */main.cpp
+$(ODIR)/main.o: */main.cpp $(DEPS)
+	@echo Compiling $<...
 	@mkdir -p $(dir $@)
-	$(CXX) -c $< -o $@ $(CPPFLAGS)
-
+	$(CXX) -c -o $@ $< $(CPPFLAGS)
 
 build: $(OBJ)
-	$(CXX) -o $@ $^ $(LIBS) $(CPPFLAGS)
+	@echo Creating an executable file...
+	$(CXX) -o $@ $^ $(LIBS)
 
 start: build
 	./build
@@ -60,7 +62,7 @@ clean:
 	rm -rf $(ODIR) ./build
 
 show:
-	echo $(OBJ)
+	echo $(DEPS)
 
 print:	*/*/*.cpp
 	echo $^

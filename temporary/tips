@@ -52,4 +52,9 @@ ldconfig should normally be run by the super-user as it may require write permis
 
 
 How to clone sigle submodule:
-    git submodule update -- ./external/pistache
+    git submodule update --init ./external/pistache
+    git submodule update --init ./external/json
+
+
+Check this sollution of makefile:
+https://gist.github.com/maxtruxa/4b3929e118914ccef057f8a05c614b0f
