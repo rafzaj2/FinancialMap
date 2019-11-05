@@ -58,3 +58,21 @@ How to clone sigle submodule:
 
 Check this sollution of makefile:
 https://gist.github.com/maxtruxa/4b3929e118914ccef057f8a05c614b0f
+
+
+Linux Tips:
+	netstat -aon | grep '[port_number]' (If the port is being used by any application, then that application’s detail will be shown. The number, which is shown at the last column of the list, is the PID  (process ID) of that application)
+
+MongoDB tips:
+	sudo service mongod start (starting MongoDB server, 27017 is the default port the standalone mongod listens on.)
+	sudo service mongod stop (stop MongoDB server)
+	sudo service mongod restart
+	mongo (Start a mongo shell on the same host machine as the mongod. You can run the mongo shell without any command-line options to connect to a mongod that is running on your localhost with default port 27017)
+
+reparing mongo server:
+sudo mongod
+mongod --repair
+sudo systemctl enable mongod
+sudo service mongod restart
+sudo service mongod start
+	
