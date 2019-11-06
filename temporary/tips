@@ -75,4 +75,7 @@ mongod --repair
 sudo systemctl enable mongod
 sudo service mongod restart
 sudo service mongod start
+
+in case of problem with run mongod:
+https://stackoverflow.com/questions/7948789/mongod-complains-that-there-is-no-data-db-folder
 	

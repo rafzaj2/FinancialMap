@@ -5,6 +5,7 @@
 #include <bsoncxx/builder/stream/document.hpp>
 #include <bsoncxx/types.hpp>
 #include <iostream>
+#include <string>
 
 #include <mongocxx/client.hpp>
 #include <mongocxx/instance.hpp>
@@ -21,6 +22,7 @@ using bsoncxx::builder::stream::close_document;
 using bsoncxx::builder::stream::open_array;
 using bsoncxx::builder::stream::close_array;
 using bsoncxx::builder::stream::finalize;
+using namespace std;
 
 
 
@@ -45,6 +47,9 @@ private:
     mongocxx::database  m_db;
 
     unsigned int        setDb(string collName);
+    unsigned int        initDb();
+    unsigned int        initCollections();
+    unsigned int        initUsersColl();
 
 public:
     unsigned int        createDb(string dbName);
@@ -54,6 +59,7 @@ public:
     unsigned int        downloadColl(string collName);
     unsigned int        updateDb(string dbName);
     unsigned int        updateColl(string collName);
+    unsigned int        init();
     
 
 

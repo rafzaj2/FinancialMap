@@ -1,7 +1,7 @@
 
 IDIR=./include
 CXX=g++ -std=c++11
-CPPFLAGS=-Iinclude/investments -Iinclude/dbcommunication -Iinclude/webcommunication -Iexternal/json/include
+CPPFLAGS=-Iinclude/investments -Iinclude/dbcommunication -Iinclude/webcommunication -Iexternal/json/include -I/usr/local/include/mongocxx/v_noabi -I/usr/local/include/bsoncxx/v_noabi -lmongocxx -lbsoncxx
 SRCDIR=./src
 
 ODIR=./obj
