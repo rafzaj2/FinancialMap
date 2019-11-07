@@ -15,7 +15,7 @@
 
 
 /*****************************************************************************/
-/****************using section*********************************************/
+/****************using section should be moved to cpp file********************/
 using bsoncxx::builder::stream::document;
 using bsoncxx::builder::stream::open_document;
 using bsoncxx::builder::stream::close_document;

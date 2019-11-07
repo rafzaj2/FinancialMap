@@ -1,7 +1,9 @@
 
 IDIR=./include
 CXX=g++ -std=c++11
-CPPFLAGS=-Iinclude/investments -Iinclude/dbcommunication -Iinclude/webcommunication -Iexternal/json/include -I/usr/local/include/mongocxx/v_noabi -I/usr/local/include/bsoncxx/v_noabi -lmongocxx -lbsoncxx
+CPPFLAGS=-Iinclude/investments -Iinclude/dbcommunication -Iinclude/webcommunication -Iexternal/json/include \
+		 -I/usr/local/include/mongocxx/v_noabi -I/usr/local/include/libmongoc-1.0 -I/usr/local/include/bsoncxx/v_noabi \
+		 -I/usr/local/include/libbson-1.0 -L/usr/local/lib
 SRCDIR=./src
 
 ODIR=./obj
@@ -20,7 +22,7 @@ INVESTMENTSHEADERS=$(wildcard $(IDIR)/$(INVESTMENTSDIR)/*.h)
 DBCOMMUNICATIONHEADERS=$(wildcard $(IDIR)/$(DBCOMMUNICATIONDIR)/*.h)
 WEBCOMMUNICATIONHEADERS=$(wildcard $(IDIR)/$(WEBCOMMUNICATIONDIR)/*.h)
 
-LIBS=-lpistache -lpthread
+LIBS=-lpistache -lpthread -lmongocxx -lbsoncxx
 
 
 DEPS = $(INVESTMENTSHEADERS) $(DBCOMMUNICATIONHEADERS) $(WEBCOMMUNICATIONHEADERS)

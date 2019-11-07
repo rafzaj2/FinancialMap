@@ -27,14 +27,19 @@ unsigned int  DbController::initCollections()
 
 unsigned int  DbController::initUsersColl()
 {
-
+    if (1)
+    {
+        mongocxx::collection coll = m_db["users"]; //If the collection you request does not exist, MongoDB creates it when you first store data.
+        const string doc = {};
+        
+    }
     return 0;
 }
 
 
 unsigned int  DbController::initDb()
 {
-    //mongocxx::database db = m_client["financialmap"];
+    m_db = m_client["financialmap"];
 
 
     return 0;
