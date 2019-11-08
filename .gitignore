@@ -4,6 +4,7 @@ backend/external/mongo-c-driver-1.15.1/
 backend/external/mongo-cxx-driver/
 build
 .vscode
+backend/external/mongo/
 
 # Compiled source #
 ###################

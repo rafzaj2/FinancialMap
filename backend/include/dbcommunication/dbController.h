@@ -60,6 +60,7 @@ public:
     unsigned int        updateDb(string dbName);
     unsigned int        updateColl(string collName);
     unsigned int        init();
+    mongocxx::collection    getCollection(string CollName);
     
 
 

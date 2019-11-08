@@ -3,6 +3,7 @@
 
 #include <pistache/router.h>
 #include <nlohmann/json.hpp>
+#include "dbController.h"
 
 using namespace Pistache;
 using json = nlohmann::json;
@@ -11,8 +12,8 @@ using json = nlohmann::json;
 class Auth
 {
     public:
-        Auth(std::shared_ptr<Rest::Router> Router):
-            router(Router)
+        Auth(std::shared_ptr<Rest::Router> Router, std::shared_ptr<DbController> dbCtrl):
+            router(Router), dbController(dbCtrl)
         {}
         void setupRoutes();
 
@@ -21,6 +22,7 @@ class Auth
         void doPostRegister(const Rest::Request& request, Http::ResponseWriter response);
 
         std::shared_ptr<Rest::Router> router;
+        std::shared_ptr<DbController> dbController;
 };
 
 

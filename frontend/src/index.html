@@ -42,7 +42,7 @@ function login(form) {
     var userDataJson = JSON.stringify(userData);
     alert(userDataJson); 
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("POST", "http://127.0.0.1:9080/", true);
+    xmlhttp.open("POST", "http://127.0.0.1:9080/login", true);
     xmlhttp.setRequestHeader('Content-type', 'application/json');
     xmlhttp.send(userDataJson);
     xmlhttp.onreadystatechange = function () {
