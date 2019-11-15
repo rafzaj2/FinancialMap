@@ -13,9 +13,8 @@ void Auth::doPostLogin(const Rest::Request& request, Http::ResponseWriter respon
     std::cout << "doPostLogin function executing" << std::endl;
 
     json userData = json::parse(request.body());
-    string user = userData["Username"].dump();
-    string password = userData["Password"].dump();
-    std::cout << "Json userData = " << userData << std::endl;
+    string user = userData["Username"];
+    string password = userData["Password"];
 
     auto collection = dbController->getCollection("users"); 
 
@@ -27,7 +26,6 @@ void Auth::doPostLogin(const Rest::Request& request, Http::ResponseWriter respon
    
     bsoncxx::document::view view = doc_value.view();
 
-    cout << "We will look for: " << bsoncxx::to_json(view) << endl;
     try 
     {
         auto users = collection.find_one(view);
@@ -37,11 +35,9 @@ void Auth::doPostLogin(const Rest::Request& request, Http::ResponseWriter respon
     catch (...)
     {
         cout << "Searching user in users collection failed" << endl;
+        response.send(Http::Code::Not_Found);
+        return;
     }
-
-        // cout << "maybe result is TRUE";
-        // bsoncxx::document::element elem = maybe_result.value().view()["login"];
-        // string elemstr = elem.get_utf8().value.to_string();
 
     response.send(Http::Code::Not_Implemented);
 }
