@@ -5,6 +5,11 @@ backend/external/mongo-cxx-driver/
 build
 .vscode
 backend/external/mongo/
+backend/ut/CMakeFiles/
+backend/ut/Makefile
+backend/ut/CMakeCache.txt
+backend/ut/cmake_install.cmake
+backend/ut/executeTests
 
 # Compiled source #
 ###################
