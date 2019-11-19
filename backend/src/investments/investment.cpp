@@ -39,6 +39,20 @@ double Investment::getCurrentValue()
     return m_currentValue;
 }
 
+void Investment::setInitialValue(const double initialValue)
+{
+    m_intialValue = initialValue;
+}
+
+void Investment::setCurrentValue(const double currentValue)
+{
+    m_currentValue = currentValue;
+}
+
+double Investment::calculateInvestmentReturn()
+{
+    Investment::calculateInvestmentReturn(InvestmentRetrunPeriod::TOTAL);
+}
 double Investment::calculateInvestmentReturn(const InvestmentRetrunPeriod period)
 {
     std::chrono::time_point<std::chrono::system_clock> currentTime;

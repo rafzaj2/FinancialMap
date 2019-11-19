@@ -62,6 +62,8 @@ public:
     virtual ~Investment();
     double getInitialValue();
     double getCurrentValue();
+    void setInitialValue(const double initialValue);
+    void setCurrentValue(const double currentValue);
     double calculateInvestmentReturn();
     double calculateInvestmentReturn(const InvestmentRetrunPeriod period);
     double getHistoricalAssetValue(std::time_t periodTime);
