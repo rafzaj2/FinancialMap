@@ -6,7 +6,6 @@
 
 
 
-
 class Logger
 {
 public:
@@ -47,7 +46,7 @@ private:
     static Logger instance;
 };
 
-#ifndef ENABLE_LOGGER
+#ifdef ENABLE_LOGGER
  
 #define LOGGER_START(MIN_PRIORITY, FILE) Logger::Start(MIN_PRIORITY, FILE);
 #define LOGGER_STOP() Logger::Stop();

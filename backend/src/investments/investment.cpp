@@ -58,7 +58,7 @@ double Investment::calculateInvestmentReturn(const InvestmentRetrunPeriod period
     std::chrono::time_point<std::chrono::system_clock> currentTime;
     currentTime = std::chrono::system_clock::now(); 
     std::time_t currentDate = std::chrono::system_clock::to_time_t(currentTime);
-    cout << "Current date is equal to " << std::ctime(&currentDate) << endl;
+    cout << "Current date is equal to  " << std::ctime(&currentDate) << endl;
     double currentValue = getHistoricalAssetValue(currentDate);
 
     if(InvestmentRetrunPeriod::TOTAL == period)

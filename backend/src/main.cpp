@@ -1,3 +1,4 @@
+#include "logger.h"
 #include "authentication.h"
 #include "investment.h"
 #include "dbController.h"
@@ -8,6 +9,7 @@
 #include <chrono>
 #include <ctime> 
 #include <memory>
+
 
 
 using namespace std;
@@ -46,6 +48,11 @@ class StatsEndpoint {
 
 
 int main(int argc, char *argv[]) {
+
+  string logFilePath = "logs/";
+  LOGGER_START(static_cast<Logger::Priority>(DEBUGLEVEL), "logfile")
+  LOGGER_WRITE(Logger::CONFIG, "input file is ")
+
   Port port(9080);
 
   int thr = 2;
@@ -80,5 +87,8 @@ int main(int argc, char *argv[]) {
   auth.setupRoutes();
 
   stats.start();
+
+  LOGGER_STOP()
+
 }
 

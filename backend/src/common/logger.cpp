@@ -1,5 +1,5 @@
 #include "logger.h"
- #define ENABLE_LOGGER
+
 
 using namespace std;
  
@@ -27,7 +27,7 @@ Logger::Logger() : active(false) {}
  
 void Logger::Start(Priority minPriority, const string& logFile)
 {
-    std::cout << "Logger::Start() function execution" << std::endl;
+    std::cout << "Logger::Start() function execution with priority equal to " << minPriority << std::endl;
     instance.active = true;
     instance.minPriority = minPriority;
     if (logFile != "")
