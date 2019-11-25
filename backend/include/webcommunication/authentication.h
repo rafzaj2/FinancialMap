@@ -8,6 +8,12 @@
 using namespace Pistache;
 using json = nlohmann::json;
 
+enum class SearchType
+{
+    EMAIL = 0,
+    PASSWORD = 1
+};
+
 
 class Auth
 {
@@ -20,10 +26,12 @@ class Auth
     private:
         void doPostLogin(const Rest::Request& request, Http::ResponseWriter response);
         void doPostRegister(const Rest::Request& request, Http::ResponseWriter response);
+        bool findUser(string& login, string& passwordOrEmail, SearchType searchType, mongocxx::collection& collection);
 
         std::shared_ptr<Rest::Router> router;
         std::shared_ptr<DbController> dbController;
 };
+
 
 
 
