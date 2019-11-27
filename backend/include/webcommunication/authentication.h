@@ -1,8 +1,6 @@
-#ifndef AUTHENTICATION
-#define AUTHENTICATION
-
 #include <pistache/router.h>
 #include <nlohmann/json.hpp>
+#include "user.h"
 #include "dbController.h"
 
 using namespace Pistache;
@@ -11,7 +9,7 @@ using json = nlohmann::json;
 enum class SearchType
 {
     EMAIL = 0,
-    PASSWORD = 1
+    LOGIN = 1
 };
 
 
@@ -26,7 +24,9 @@ class Auth
     private:
         void doPostLogin(const Rest::Request& request, Http::ResponseWriter response);
         void doPostRegister(const Rest::Request& request, Http::ResponseWriter response);
-        bool findUser(string& login, string& passwordOrEmail, SearchType searchType, mongocxx::collection& collection);
+        bool findUser(string& keyValue, SearchType searchType, mongocxx::collection& collection, User& user);
+        std::string makeKeyForSearching(SearchType searchType);
+        void createUserAccount(string login,string email,string password, mongocxx::collection& collection);
 
         std::shared_ptr<Rest::Router> router;
         std::shared_ptr<DbController> dbController;
@@ -43,24 +43,3 @@ class Auth
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#endif 

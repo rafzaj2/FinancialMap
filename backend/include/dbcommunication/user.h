@@ -1,6 +1,8 @@
 #pragma once
 
 #include <string>
+#include <bsoncxx/json.hpp>
+
 
 
 
@@ -16,6 +18,7 @@ public:
     void setEmail(std::string email);
     void setPassword(std::string password);
     void setId(std::string id);
+    void createUserFromDocument(bsoncxx::stdx::optional<bsoncxx::document::value>& userDocument);
 
 private:
     std::string login;

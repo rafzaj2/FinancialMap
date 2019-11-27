@@ -41,3 +41,8 @@ void User::setId(string id)
 {
     this->id = id;
 }
+
+void User::createUserFromDocument(bsoncxx::stdx::optional<bsoncxx::document::value>& userDocument)
+{
+
+}

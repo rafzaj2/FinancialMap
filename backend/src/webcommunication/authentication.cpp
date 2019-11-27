@@ -1,6 +1,11 @@
 #include "authentication.h"
 #include "logger.h"
+#include "user.h"
 #include <bsoncxx/json.hpp>
+#include <mongocxx/stdx.hpp>
+#include <bsoncxx/stdx/optional.hpp>
+
+
 
 
 
@@ -11,6 +16,8 @@ void Auth::setupRoutes()
     Routes::Post(*router, "/register", Routes::bind(&Auth::doPostRegister, this));
 }
 
+/**********************************************************************************************************************/
+
 void Auth::doPostLogin(const Rest::Request& request, Http::ResponseWriter response)
 {
     std::cout << "doPostLogin function executing" << std::endl;
@@ -20,14 +27,24 @@ void Auth::doPostLogin(const Rest::Request& request, Http::ResponseWriter respon
     string password = userData["Password"];
 
     auto collection = dbController->getCollection("users");
-    string type("password");
+    User user;
+
     try
     {
-        bool userExistance = findUser(login, password, SearchType::PASSWORD, collection);
+        bool userExistence = findUser(login, SearchType::LOGIN, collection, user);
 
-        if (userExistance)
+        if (userExistence)
         {
-            response.send(Http::Code::Not_Implemented);
+            if (password == user.getPassword())
+            {
+                //To be done
+                response.send(Http::Code::Not_Implemented);
+            }
+            else
+            {
+                //To be done
+                response.send(Http::Code::Not_Implemented);
+            }
         }
         else
         {
@@ -41,14 +58,40 @@ void Auth::doPostLogin(const Rest::Request& request, Http::ResponseWriter respon
 
 }
 
+/**********************************************************************************************************************/
+
 void Auth::doPostRegister(const Rest::Request& request, Http::ResponseWriter response)
 {
     std::cout << "doPUTRegister function executing" << std::endl;
 
     json userData = json::parse(request.body());
-    string user = userData["Username"];
+    string login = userData["Username"];
     string email = userData["Email"];
     string password = userData["Password"];
+
+    auto collection = dbController->getCollection("users");
+    bool userExistence;
+    User user;
+
+    try
+    {
+        userExistence = findUser(login, SearchType::EMAIL, collection, user);
+
+        if (userExistence)
+        {
+            //Here is case when an account with a given login or email already exists
+            response.send(Http::Code::Not_Implemented);
+        }
+        else
+        {
+            createUserAccount(login, email, password, collection);
+            response.send(Http::Code::Not_Implemented);
+        }
+    }
+    catch (string s)
+    {
+        LOGGER_WRITE(Logger::ERROR, s)
+    }
 
     std::cout << "Json userData = " << userData << std::endl;
 
@@ -56,44 +99,71 @@ void Auth::doPostRegister(const Rest::Request& request, Http::ResponseWriter res
     response.send(Http::Code::Not_Implemented);
 }
 
-bool Auth::findUser(string& login, string& passwordOrEmail, SearchType searchType, mongocxx::collection& collection)
+/**********************************************************************************************************************/
+
+bool Auth::findUser(string& keyValue, SearchType searchType, mongocxx::collection& collection, User& user)
 {
-    string emailOrPassword;
-    if (searchType == SearchType::EMAIL)
+
+    string keyForSearching;
+
+    try
     {
-        emailOrPassword = "email";
+        keyForSearching = makeKeyForSearching(searchType);
     }
-    else if (searchType == SearchType::PASSWORD)
+    catch (string s)
     {
-        emailOrPassword = "password";
+        LOGGER_WRITE(Logger::ERROR, s)
+        return false;
     }
-    else
-    {
-        throw "Auth::findUser incorrect search type";
-    }
-    
+
     auto builder = bsoncxx::builder::stream::document{};
     bsoncxx::document::value doc_value = builder
-        << "login" << login
-        << emailOrPassword << passwordOrEmail
+        << keyForSearching << keyValue
         << bsoncxx::builder::stream::finalize;
 
     bsoncxx::document::view view = doc_value.view();
 
     try
     {
-        auto users = collection.find_one(view);
-        cout << bsoncxx::to_json(users.value()) << endl;
-        cout << "Searching user in users collection successfuly finished" << endl;
+        bsoncxx::stdx::optional<bsoncxx::document::value> userDocument = collection.find_one(view);
+        user.createUserFromDocument(userDocument);
+        //cout << bsoncxx::to_json(users.value()) << endl;
+        LOGGER_WRITE(Logger::INFO, "Searching user in users collection successfuly finished")
     }
     catch (...)
     {
-        cout << "Searching user in users collection failed" << endl;
-        return 1;
+        LOGGER_WRITE(Logger::INFO, "Searching user in users collection complited without success")
+        return false;
     }
 
-    return 0;
+    return true;
 }
+
+/**********************************************************************************************************************/
+
+string Auth::makeKeyForSearching(SearchType searchType)
+{
+    if (searchType == SearchType::EMAIL)
+    {
+        return "email";
+    }
+    else if (searchType == SearchType::LOGIN)
+    {
+        return "login";
+    }
+    else
+    {
+        throw "Auth::makeKeyForSearching incorrect search type";
+    }
+}
+
+
+
+void Auth::createUserAccount(string login, string email, string password, mongocxx::collection& collection)
+{
+
+}
+
 
 
 // bool Auth::addUser(string login, string passworOrEmail, mongocxx::collection collection)
