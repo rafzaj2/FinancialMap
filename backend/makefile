@@ -78,10 +78,17 @@ start: build
 .PHONY: clean
 
 clean:
-	rm -rf $(ODIR) finmap finmap_debug
+	rm -rf $(ODIR) finmap finmap_debug logfile
 
 show:
 	echo $(DEPS)
+
+help:
+	@echo "To build executable without debug mode type: make"
+	@echo "To build executable in debug mode type: make DEBUGLEVEL=Level"
+	@echo "0 = DEBUG    1 = CONFIG    2 = INFO    3 = WARNING    4 = ERROR"
+
+
 
 print:	*/*/*.cpp
 	echo $^

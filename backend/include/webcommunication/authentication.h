@@ -24,9 +24,9 @@ class Auth
     private:
         void doPostLogin(const Rest::Request& request, Http::ResponseWriter response);
         void doPostRegister(const Rest::Request& request, Http::ResponseWriter response);
-        bool findUser(string& keyValue, SearchType searchType, mongocxx::collection& collection, User& user);
+        std::optional<User> findUser(const string& keyValue, SearchType searchType, mongocxx::collection& collection);
         std::string makeKeyForSearching(SearchType searchType);
-        void createUserAccount(string login,string email,string password, mongocxx::collection& collection);
+        void createUserAccount(const string login,const string email, const string password, mongocxx::collection& collection);
 
         std::shared_ptr<Rest::Router> router;
         std::shared_ptr<DbController> dbController;

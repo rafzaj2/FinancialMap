@@ -49,9 +49,9 @@ class StatsEndpoint {
 
 int main(int argc, char *argv[]) {
 
-  string logFilePath = "logs/";
-  LOGGER_START(static_cast<Logger::Priority>(DEBUGLEVEL), "logfile")
-  LOGGER_WRITE(Logger::CONFIG, "input file is ")
+  string logFilePath("./logfile");
+  LOGGER_START(static_cast<Logger::Priority>(DEBUGLEVEL), logFilePath)
+  LOGGER_WRITE(Logger::CONFIG, "input file is " + logFilePath)
 
   Port port(9080);
 
@@ -71,12 +71,12 @@ int main(int argc, char *argv[]) {
   std::cout << "Using " << thr << " threads" << std::endl;
 
 
-  cout << "Database controller initialization ..." << endl;
+  LOGGER_WRITE(Logger::CONFIG, "Database controller initialization ...")
 
   auto dbController = make_shared<DbController>();
   dbController->init();
 
-  cout << "Database controller initialization completed" << endl;
+  LOGGER_WRITE(Logger::CONFIG, "Database controller initialization completed")
 
   StatsEndpoint stats(addr);
 

@@ -20,28 +20,29 @@ void Auth::setupRoutes()
 
 void Auth::doPostLogin(const Rest::Request& request, Http::ResponseWriter response)
 {
-    std::cout << "doPostLogin function executing" << std::endl;
+    LOGGER_WRITE(Logger::DEBUG, "Start of executing login procedure")
 
     json userData = json::parse(request.body());
     string login = userData["Username"];
     string password = userData["Password"];
 
     auto collection = dbController->getCollection("users");
-    User user;
 
     try
     {
-        bool userExistence = findUser(login, SearchType::LOGIN, collection, user);
+        std::optional<User> user = findUser(login, SearchType::LOGIN, collection);
 
-        if (userExistence)
+        if (user)
         {
-            if (password == user.getPassword())
+            if (password == user->getPassword())
             {
+                LOGGER_WRITE(Logger::DEBUG, "password given by the user is correct")
                 //To be done
                 response.send(Http::Code::Not_Implemented);
             }
             else
             {
+                LOGGER_WRITE(Logger::DEBUG, "password given by the user is incorrect")
                 //To be done
                 response.send(Http::Code::Not_Implemented);
             }
@@ -56,13 +57,15 @@ void Auth::doPostLogin(const Rest::Request& request, Http::ResponseWriter respon
         LOGGER_WRITE(Logger::ERROR, s)
     }
 
+    LOGGER_WRITE(Logger::DEBUG, "End of executing login procedure")
+
 }
 
 /**********************************************************************************************************************/
 
 void Auth::doPostRegister(const Rest::Request& request, Http::ResponseWriter response)
 {
-    std::cout << "doPUTRegister function executing" << std::endl;
+    LOGGER_WRITE(Logger::DEBUG, "Start of executing register procedure")
 
     json userData = json::parse(request.body());
     string login = userData["Username"];
@@ -70,41 +73,35 @@ void Auth::doPostRegister(const Rest::Request& request, Http::ResponseWriter res
     string password = userData["Password"];
 
     auto collection = dbController->getCollection("users");
-    bool userExistence;
-    User user;
 
-    try
-    {
-        userExistence = findUser(login, SearchType::EMAIL, collection, user);
+    std::optional<User> user = findUser(login, SearchType::EMAIL, collection);
 
-        if (userExistence)
-        {
-            //Here is case when an account with a given login or email already exists
-            response.send(Http::Code::Not_Implemented);
-        }
-        else
-        {
-            createUserAccount(login, email, password, collection);
-            response.send(Http::Code::Not_Implemented);
-        }
-    }
-    catch (string s)
+    if (user)
     {
-        LOGGER_WRITE(Logger::ERROR, s)
+        //Here is case when an account with a given login or email already exists
+        response.send(Http::Code::Not_Implemented);
     }
+    else
+    {
+        createUserAccount(login, email, password, collection);
+        response.send(Http::Code::Not_Implemented);
+    }
+
 
     std::cout << "Json userData = " << userData << std::endl;
 
 
     response.send(Http::Code::Not_Implemented);
+    LOGGER_WRITE(Logger::DEBUG, "End of executing register procedure")
 }
 
 /**********************************************************************************************************************/
 
-bool Auth::findUser(string& keyValue, SearchType searchType, mongocxx::collection& collection, User& user)
+std::optional<User> Auth::findUser(const string& keyValue, SearchType searchType, mongocxx::collection& collection)
 {
 
     string keyForSearching;
+    std::optional<User> user;
 
     try
     {
@@ -113,7 +110,7 @@ bool Auth::findUser(string& keyValue, SearchType searchType, mongocxx::collectio
     catch (string s)
     {
         LOGGER_WRITE(Logger::ERROR, s)
-        return false;
+        return std::nullopt;
     }
 
     auto builder = bsoncxx::builder::stream::document{};
@@ -126,17 +123,16 @@ bool Auth::findUser(string& keyValue, SearchType searchType, mongocxx::collectio
     try
     {
         bsoncxx::stdx::optional<bsoncxx::document::value> userDocument = collection.find_one(view);
-        user.createUserFromDocument(userDocument);
-        //cout << bsoncxx::to_json(users.value()) << endl;
-        LOGGER_WRITE(Logger::INFO, "Searching user in users collection successfuly finished")
+        User user(userDocument);
+        LOGGER_WRITE(Logger::DEBUG, "user found in Users collection in DB")
     }
     catch (...)
     {
-        LOGGER_WRITE(Logger::INFO, "Searching user in users collection complited without success")
-        return false;
+        LOGGER_WRITE(Logger::DEBUG, "user not found in Users collection in DB")
+        return std::nullopt;
     }
 
-    return true;
+    return user;
 }
 
 /**********************************************************************************************************************/
@@ -158,16 +154,7 @@ string Auth::makeKeyForSearching(SearchType searchType)
 }
 
 
-
-void Auth::createUserAccount(string login, string email, string password, mongocxx::collection& collection)
+void Auth::createUserAccount(const string login,const string email, const string password, mongocxx::collection& collection)
 {
 
 }
-
-
-
-// bool Auth::addUser(string login, string passworOrEmail, mongocxx::collection collection)
-// {
-
-//     return 0;
-// }

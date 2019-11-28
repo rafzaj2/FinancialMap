@@ -1,48 +1,62 @@
 #include "user.h"
+#include <bsoncxx/types.hpp>
 
 using namespace std;
 
-string User::getLogin()
+/**********************************************************************************************************************/
+
+User::User(string login, string email, string password) : m_login(login), m_email(email), m_password(password)
 {
-    return login;
+
 }
 
-string User::getEmail()
+User::User(bsoncxx::stdx::optional<bsoncxx::document::value>& userDocument)
 {
-    return email;
+    bsoncxx::document::view userView = userDocument->view();
+
+    m_login = userView["login"].get_utf8().value.to_string();
+    m_email = userView["email"].get_utf8().value.to_string();
+    m_password = userView["password"].get_utf8().value.to_string();
 }
 
-string User::getPassword()
+/**********************************************************************************************************************/
+
+const string& User::getLogin()  const
 {
-    return password;
+    return m_login;
 }
 
-string User::getId()
+const string& User::getEmail() const
 {
-    return id;
+    return m_email;
+}
+
+const string& User::getPassword() const
+{
+    return m_password;
+}
+
+const string& User::getId() const
+{
+    return m_id;
 }
 
 void User::setLogin(string login)
 {
-    this->login = login;
+    this->m_login = login;
 }
 
 void User::setEmail(string email)
 {
-    this->email = email;
+    this->m_email = email;
 }
 
 void User::setPassword(string password)
 {
-    this->password = password;
+    this->m_password = password;
 }
 
 void User::setId(string id)
 {
-    this->id = id;
-}
-
-void User::createUserFromDocument(bsoncxx::stdx::optional<bsoncxx::document::value>& userDocument)
-{
-
+    this->m_id = id;
 }
