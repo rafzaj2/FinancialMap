@@ -69,7 +69,7 @@ unsigned int  DbController::initDb()
     return 0;
 }
 
-mongocxx::collection    DbController::getCollection(string CollName)
+mongocxx::collection DbController::getCollection(string CollName)
 {
 
     return m_db["users"];

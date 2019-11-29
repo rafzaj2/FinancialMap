@@ -19,14 +19,15 @@ class Auth
         Auth(std::shared_ptr<Rest::Router> Router, std::shared_ptr<DbController> dbCtrl):
             router(Router), dbController(dbCtrl)
         {}
-        void setupRoutes();
+        void    setupRoutes();
 
     private:
-        void doPostLogin(const Rest::Request& request, Http::ResponseWriter response);
-        void doPostRegister(const Rest::Request& request, Http::ResponseWriter response);
-        std::optional<User> findUser(const string& keyValue, SearchType searchType, mongocxx::collection& collection);
-        std::string makeKeyForSearching(SearchType searchType);
-        void createUserAccount(const string login,const string email, const string password, mongocxx::collection& collection);
+        void                    doPostLogin(const Rest::Request& request, Http::ResponseWriter response);
+        void                    doPostRegister(const Rest::Request& request, Http::ResponseWriter response);
+        std::optional<User>     findUser(const string& keyValue, SearchType searchType, mongocxx::collection& collection);
+        std::string             makeKeyForSearching(SearchType searchType);
+        void                    addUserAccountToDB(const string login, const string email, const string password, mongocxx::collection& collection);
+        const mongocxx::collection getUsersCollection();
 
         std::shared_ptr<Rest::Router> router;
         std::shared_ptr<DbController> dbController;

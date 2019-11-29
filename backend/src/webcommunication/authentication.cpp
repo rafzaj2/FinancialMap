@@ -26,7 +26,7 @@ void Auth::doPostLogin(const Rest::Request& request, Http::ResponseWriter respon
     string login = userData["Username"];
     string password = userData["Password"];
 
-    auto collection = dbController->getCollection("users");
+    auto collection = getUsersCollection();
 
     try
     {
@@ -65,34 +65,38 @@ void Auth::doPostLogin(const Rest::Request& request, Http::ResponseWriter respon
 
 void Auth::doPostRegister(const Rest::Request& request, Http::ResponseWriter response)
 {
-    LOGGER_WRITE(Logger::DEBUG, "Start of executing register procedure")
+    LOGGER_WRITE(Logger::DEBUG, "Start of executing registration procedure")
 
     json userData = json::parse(request.body());
     string login = userData["Username"];
     string email = userData["Email"];
     string password = userData["Password"];
 
-    auto collection = dbController->getCollection("users");
+    auto collection = getUsersCollection();
 
-    std::optional<User> user = findUser(login, SearchType::EMAIL, collection);
+    std::optional<User> UserWithLogin = findUser(login, SearchType::LOGIN, collection);
+    std::optional<User> UserWithemail = findUser(email, SearchType::EMAIL, collection);
 
-    if (user)
+    if (UserWithLogin)
     {
-        //Here is case when an account with a given login or email already exists
+        LOGGER_WRITE(Logger::DEBUG, "User with the same login already exists")
+        //Here is case when an account with a given login already exists
+        response.send(Http::Code::Not_Implemented);
+
+    }
+    else if (!UserWithLogin && UserWithemail)
+    {
+        LOGGER_WRITE(Logger::DEBUG, "User with the same email already exists")
+        //Here is case when an account with a given email already exists
         response.send(Http::Code::Not_Implemented);
     }
     else
     {
-        createUserAccount(login, email, password, collection);
+        addUserAccountToDB(login, email, password, collection);
         response.send(Http::Code::Not_Implemented);
     }
 
-
-    std::cout << "Json userData = " << userData << std::endl;
-
-
-    response.send(Http::Code::Not_Implemented);
-    LOGGER_WRITE(Logger::DEBUG, "End of executing register procedure")
+    LOGGER_WRITE(Logger::DEBUG, "End of executing registration procedure")
 }
 
 /**********************************************************************************************************************/
@@ -154,7 +158,24 @@ string Auth::makeKeyForSearching(SearchType searchType)
 }
 
 
-void Auth::createUserAccount(const string login,const string email, const string password, mongocxx::collection& collection)
+void Auth::addUserAccountToDB(const string login, const string email, const string password, mongocxx::collection& collection)
 {
+    auto builder = bsoncxx::builder::stream::document{};
+    bsoncxx::document::value doc_value = builder
+    << "login" << login
+    << "password" << password
+    << "user_id" << 0
+    << "email" << email
+    << bsoncxx::builder::stream::finalize;
 
+    bsoncxx::document::view view = doc_value.view();
+    collection.insert_one(view);
+
+}
+
+
+
+const mongocxx::collection Auth::getUsersCollection()
+{
+    return dbController->getCollection("users");
 }
