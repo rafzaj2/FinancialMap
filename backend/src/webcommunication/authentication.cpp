@@ -129,14 +129,14 @@ std::optional<User> Auth::findUser(const string& keyValue, SearchType searchType
         bsoncxx::stdx::optional<bsoncxx::document::value> userDocument = collection.find_one(view);
         User user(userDocument);
         LOGGER_WRITE(Logger::DEBUG, "user found in Users collection in DB")
+        return user;
     }
     catch (...)
     {
         LOGGER_WRITE(Logger::DEBUG, "user not found in Users collection in DB")
         return std::nullopt;
     }
-
-    return user;
+    
 }
 
 /**********************************************************************************************************************/
@@ -160,6 +160,7 @@ string Auth::makeKeyForSearching(SearchType searchType)
 
 void Auth::addUserAccountToDB(const string login, const string email, const string password, mongocxx::collection& collection)
 {
+    LOGGER_WRITE(Logger::DEBUG, "Adding user to Data Base")
     auto builder = bsoncxx::builder::stream::document{};
     bsoncxx::document::value doc_value = builder
     << "login" << login

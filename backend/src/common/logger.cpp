@@ -48,7 +48,6 @@ void Logger::Stop()
  
 void Logger::Write(Priority priority, const string& message)
 {
-    std::cout << "Logger::Write() function execution" << std::endl;
     if (instance.active && priority >= instance.minPriority)
     {
         // identify current output stream
