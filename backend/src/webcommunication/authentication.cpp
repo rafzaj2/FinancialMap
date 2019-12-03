@@ -79,21 +79,25 @@ void Auth::doPostRegister(const Rest::Request& request, Http::ResponseWriter res
 
     if (UserWithLogin)
     {
-        LOGGER_WRITE(Logger::DEBUG, "User with the same login already exists")
-        //Here is case when an account with a given login already exists
-        response.send(Http::Code::Not_Implemented);
+        string errorMessage = "User with the same login already exists";
+        LOGGER_WRITE(Logger::DEBUG, errorMessage)
+
+        // Returne Status code is 200 insead of 409 like in Gmail, Facebook, Twitter and Amazon
+        response.send(Http::Code::Ok, errorMessage);
 
     }
     else if (!UserWithLogin && UserWithemail)
     {
-        LOGGER_WRITE(Logger::DEBUG, "User with the same email already exists")
-        //Here is case when an account with a given email already exists
-        response.send(Http::Code::Not_Implemented);
+        string errorMessage = "User with the same email already exists";
+        LOGGER_WRITE(Logger::DEBUG, errorMessage)
+
+        // Returne Status code is 200 insead of 409 like in Gmail, Facebook, Twitter and Amazon
+        response.send(Http::Code::Ok, errorMessage);
     }
     else
     {
         addUserAccountToDB(login, email, password, collection);
-        response.send(Http::Code::Not_Implemented);
+        response.send(Http::Code::Created);
     }
 
     LOGGER_WRITE(Logger::DEBUG, "End of executing registration procedure")
@@ -103,9 +107,9 @@ void Auth::doPostRegister(const Rest::Request& request, Http::ResponseWriter res
 
 std::optional<User> Auth::findUser(const string& keyValue, SearchType searchType, mongocxx::collection& collection)
 {
+    std::cout << "User: " << keyValue.c_str() << " searching" << std::endl;
 
     string keyForSearching;
-    std::optional<User> user;
 
     try
     {
@@ -124,18 +128,20 @@ std::optional<User> Auth::findUser(const string& keyValue, SearchType searchType
 
     bsoncxx::document::view view = doc_value.view();
 
-    try
+    bsoncxx::stdx::optional<bsoncxx::document::value> userDocument = collection.find_one(view);
+
+    if (userDocument)
     {
-        bsoncxx::stdx::optional<bsoncxx::document::value> userDocument = collection.find_one(view);
+        LOGGER_WRITE(Logger::DEBUG, "User found in Users collection in DB")
         User user(userDocument);
-        LOGGER_WRITE(Logger::DEBUG, "user found in Users collection in DB")
         return user;
     }
-    catch (...)
+    else
     {
-        LOGGER_WRITE(Logger::DEBUG, "user not found in Users collection in DB")
+        LOGGER_WRITE(Logger::DEBUG, "User not found in Users collection in DB")
         return std::nullopt;
     }
+
     
 }
 

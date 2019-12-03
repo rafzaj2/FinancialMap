@@ -1,6 +1,7 @@
 /*****************************************************************************/
 /****************includes section*********************************************/
 #include "dbController.h"
+#include "logger.h"
 
 
 using bsoncxx::builder::basic::kvp;
@@ -34,6 +35,7 @@ unsigned int  DbController::initUsersColl()
     if (!(m_db.has_collection("users")))
     {
         cout << "initUsersColl() function ..." << endl;
+        LOGGER_WRITE(Logger::CONFIG, "Start of initialization of users collection")
         mongocxx::collection coll = m_db["users"]; //If the collection you request does not exist, MongoDB creates it when you first store data.
 
 
@@ -55,6 +57,7 @@ unsigned int  DbController::initUsersColl()
 
         coll.insert_one(view); // It is to investigate why it duplicate documents in the users collection
 
+        LOGGER_WRITE(Logger::CONFIG, "End of initialization of users collection")
         
     }
     return 0;
