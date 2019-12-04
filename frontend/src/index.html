@@ -27,6 +27,30 @@
 
 </form>
 
+<form id="RegisterForm" onsubmit="return false">
+    <h1>Register Form</h1>
+    <div class="FormRow">
+        <label for="Username">Username:</label>
+        <input type="text" size="15" id="Username" name="Username">
+    </div>
+    <div class="FormRow">
+        <label for="Password">Password:</label>
+        <input type="text" size="15" id="Password" name="Password">
+    </div>
+    <div class="FormRow">
+        <label for="Password">Email:</label>
+        <input type="text" size="15" id="Email" name="Email">
+    </div>
+    <div class="FormRow" id="LoginButtonDiv">
+        <input type="submit" value="Register">
+    </div>
+    <div id="BadRegister">
+        <p>The login information you entered does not match
+        an account in our records. Please try again.</p>
+    </div>
+
+</form>
+
 <script>
     document.getElementById("LoginForm").addEventListener("submit", function() {
         alert("First!");
@@ -35,7 +59,7 @@
     });
 
 function login(form) {
-    alert("Second!");
+    alert("Login");
     var un = form.Username.value;
     var pw = form.Password.value;
     var userData = {"Username": un, "Password": pw};
@@ -52,8 +76,60 @@ function login(form) {
     }
 }
 
+
+
 function loginResults() {
-    alert("Third!");   
+    alert("loginResults");   
+    var loggedIn = document.getElementById("LoggedIn");
+    var badLogin = document.getElementById("BadLogin");
+    if (xmlhttp.responseText.indexOf("failed") == -1) {
+        loggedIn.innerHTML = "Logged in as " + xmlhttp.responseText;
+        loggedIn.style.display = "block";
+        form.style.display = "none";
+    } else {
+        badLogin.style.display = "block";
+        form.Username.select();
+        form.Username.className = "Highlighted";
+        setTimeout(function() {
+            badLogin.style.display = 'none';
+        }, 3000);
+    }
+}
+
+
+
+</script>
+
+<script>
+
+document.getElementById("RegisterForm").addEventListener("submit", function() {
+        alert("RegisterForm");
+        var registerForm = document.getElementById("RegisterForm");
+        register(registerForm);
+    });
+
+function register(form) {
+    alert("Register");
+    var un = form.Username.value;
+    var pw = form.Password.value;
+    var em = form.Email.value;
+    var userData = {"Username": un, "Password": pw, "Email": em};
+    var userDataJson = JSON.stringify(userData);
+    alert(userDataJson); 
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("POST", "http://127.0.0.1:9080/register", true);
+    xmlhttp.setRequestHeader('Content-type', 'application/json');
+    xmlhttp.send(userDataJson);
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            registerResults();
+        }
+    }
+}
+
+
+function registerResults() {
+    alert("registerResults");   
     var loggedIn = document.getElementById("LoggedIn");
     var badLogin = document.getElementById("BadLogin");
     if (xmlhttp.responseText.indexOf("failed") == -1) {
