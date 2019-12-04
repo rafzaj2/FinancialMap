@@ -38,18 +38,22 @@ void Auth::doPostLogin(const Rest::Request& request, Http::ResponseWriter respon
             {
                 LOGGER_WRITE(Logger::DEBUG, "password given by the user is correct")
                 //To be done
-                response.send(Http::Code::Not_Implemented);
+                string link;
+                response.send(Http::Code::Permanent_Redirect, link);
             }
             else
             {
                 LOGGER_WRITE(Logger::DEBUG, "password given by the user is incorrect")
-                //To be done
-                response.send(Http::Code::Not_Implemented);
+                // 401 is as far as I understand it more designed to respond to a request to
+                // content that requires authentication, not to respond to an authentication request.
+                string errorMessage("wrong user password");
+                response.send(Http::Code::Ok, errorMessage);
             }
         }
         else
         {
-            response.send(Http::Code::Not_Found);
+            string errorMessage("user with that login dosen't exist");
+            response.send(Http::Code::Ok, errorMessage);
         }
     }
     catch (string s)
@@ -107,8 +111,6 @@ void Auth::doPostRegister(const Rest::Request& request, Http::ResponseWriter res
 
 std::optional<User> Auth::findUser(const string& keyValue, SearchType searchType, mongocxx::collection& collection)
 {
-    std::cout << "User: " << keyValue.c_str() << " searching" << std::endl;
-
     string keyForSearching;
 
     try
