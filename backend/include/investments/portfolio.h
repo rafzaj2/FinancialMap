@@ -5,23 +5,18 @@
 #include "preciousMetal.h"
 #include "realEstate.h"
 
+
 class Portfolio
 {
 private:
-    Bond            bonds;
-    Share           shares;
-    PreciousMetal   preciousMetals;
-    RealEstate      realEstates;
+    /* data */
+    Bond            m_bonds;
+    Share           m_shares;
+    PreciousMetal   m_preciousMetals;
+    RealEstate      m_realEstates;
 
 public:
-
-
-Portfolio::Portfolio(/* args */)
-{
-}
-
-Portfolio::~Portfolio()
-{
-}
-
+    Portfolio(/* args */);
+    ~Portfolio();
 };
+

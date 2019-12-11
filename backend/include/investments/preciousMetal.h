@@ -1,7 +1,13 @@
 #pragma once
 
 
-class PreciousMetal
+/*****************************************************************************/
+/****************includes section*********************************************/
+#include "investment.h"
+
+
+
+class PreciousMetal : public Investment
 {
 private:
     /* data */
@@ -9,11 +15,3 @@ public:
     PreciousMetal(/* args */);
     ~PreciousMetal();
 };
-
-PreciousMetal::PreciousMetal(/* args */)
-{
-}
-
-PreciousMetal::~PreciousMetal()
-{
-}

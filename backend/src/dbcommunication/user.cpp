@@ -5,12 +5,12 @@ using namespace std;
 
 /**********************************************************************************************************************/
 
-User::User(string login, string email, string password) : m_login(login), m_email(email), m_password(password)
+User::User(string login, string email, string password) : m_login(login), m_email(email), m_password(password), m_portfolio(nullptr)
 {
 
 }
 
-User::User(bsoncxx::stdx::optional<bsoncxx::document::value>& userDocument)
+User::User(bsoncxx::stdx::optional<bsoncxx::document::value>& userDocument) : m_portfolio(nullptr)
 {
     bsoncxx::document::view userView = userDocument->view();
 

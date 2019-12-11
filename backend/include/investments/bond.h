@@ -1,8 +1,14 @@
 #pragma once
 
 
+/*****************************************************************************/
+/****************includes section*********************************************/
+#include "investment.h"
 
-class Bond
+
+
+
+class Bond : public Investment
 {
 private:
     /* data */
@@ -10,11 +16,3 @@ public:
     Bond(/* args */);
     ~Bond();
 };
-
-Bond::Bond(/* args */)
-{
-}
-
-Bond::~Bond()
-{
-}

@@ -15,7 +15,7 @@ private:
     double m_initialValueofShare;
 
 public:
-    Share() = delete;
+    Share();
     Share(Country country, Stock stock, int numberOfShares, double initialValueofShare);
     Share(Country country, Stock stock);
     virtual ~Share();
