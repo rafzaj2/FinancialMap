@@ -18,8 +18,7 @@ private:
     std::string                 m_login;
     std::string                 m_email;
     std::string                 m_password;
-    std::string                 m_id;
-    //std::unique_ptr<Portfolio>  m_portfolio;
+    int                         m_id;
     Portfolio*                  m_portfolio;
 
 public:
@@ -28,12 +27,11 @@ public:
     const std::string& getLogin() const;
     const std::string& getEmail() const;
     const std::string& getPassword() const;
-    const std::string& getId() const;
-    //const std::unique_ptr<Portfolio> getPortfolio() const;
+    const int& getId() const;
     void setLogin(std::string login);
     void setEmail(std::string email);
     void setPassword(std::string password);
-    void setId(std::string id);
+    void setId(int id);
     
 
 };

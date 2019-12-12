@@ -11,8 +11,8 @@
 class Bond : public Investment
 {
 private:
-    /* data */
+
 public:
-    Bond(/* args */);
+    Bond();
     ~Bond();
 };

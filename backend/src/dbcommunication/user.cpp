@@ -5,12 +5,12 @@ using namespace std;
 
 /**********************************************************************************************************************/
 
-User::User(string login, string email, string password) : m_login(login), m_email(email), m_password(password), m_portfolio(nullptr)
+User::User(string login, string email, string password) : m_login(login), m_email(email), m_password(password), m_portfolio(new Portfolio)
 {
 
 }
 
-User::User(bsoncxx::stdx::optional<bsoncxx::document::value>& userDocument) : m_portfolio(nullptr)
+User::User(bsoncxx::stdx::optional<bsoncxx::document::value>& userDocument) : m_portfolio(new Portfolio)
 {
     bsoncxx::document::view userView = userDocument->view();
 
@@ -36,9 +36,14 @@ const string& User::getPassword() const
     return m_password;
 }
 
-const string& User::getId() const
+const int& User::getId() const
 {
     return m_id;
+}
+
+Portfolio* User::getPortfolioPtr() const
+{
+    return m_portfolio;
 }
 
 void User::setLogin(string login)
@@ -56,7 +61,7 @@ void User::setPassword(string password)
     this->m_password = password;
 }
 
-void User::setId(string id)
+void User::setId(int id)
 {
     this->m_id = id;
 }

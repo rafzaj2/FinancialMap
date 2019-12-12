@@ -5,7 +5,8 @@
 #include <mongocxx/stdx.hpp>
 #include <bsoncxx/stdx/optional.hpp>
 
-
+#include <bsoncxx/builder/stream/document.hpp>
+#include <bsoncxx/types.hpp>
 
 
 
